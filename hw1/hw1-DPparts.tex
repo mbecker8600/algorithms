@@ -1,0 +1,320 @@
+\documentclass{article}
+%\usepackage[T1]{fontenc}
+%\usepackage{amssymb, amsmath, graphicx, subfigure, enumerate}
+%\usepackage{amsthm,alltt} 
+\usepackage[margin=1.25in]{geometry} %geometry (sets margin) and other useful packages
+\usepackage{graphicx,ctable,booktabs}
+\usepackage{mathtools}
+\usepackage[boxed]{algorithm2e}
+\usepackage{mathdots}
+\usepackage{fancyhdr} %Fancy-header package to modify header/page numbering
+\usepackage{cleveref}
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+
+
+\newcommand{\heading}[6]{
+  \renewcommand{\thepage}{\arabic{page}} % used to be #1-\arabic{page}
+  \noindent
+  \begin{center}
+  \framebox{
+    \vbox{
+      \hbox to 5.78in { \textbf{#2} \hfill #3 }
+      \vspace{4mm}
+      \hbox to 5.78in { {\Large \hfill #6  \hfill} }
+      \vspace{2mm}
+      \hbox to 5.78in { \textit{{Name: }} }
+    }
+  }
+  \end{center}
+  \vspace*{4mm}
+}
+
+%Redefining sections as problems
+\makeatletter
+
+\newenvironment{problem}{\@startsection
+       {section}
+       {2}
+       {-.2em}
+       {-3.5ex plus -1ex minus -.2ex}
+       {2.3ex plus .2ex}
+       {\pagebreak[3]%forces pagebreak when space is small; use \eject for better results
+       \large\bf\noindent{Problem }
+       }
+       }
+       %{%\vspace{1ex}\begin{center} \rule{0.3\linewidth}{.3pt}\end{center}}
+       %\begin{center}\large\bf \ldots\ldots\ldots\end{center}}
+\makeatother
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+
+%\newenvironment{proof}{\noindent{\bf Proof:} \hspace*{1mm}}{
+% \hspace*{\fill} $\Box$ }
+%\newenvironment{proof_of}[1]{\noindent {\bf Proof of #1:}
+% \hspace*{1mm}}{\hspace*{\fill} $\Box$ }
+%\newenvironment{proof_claim}{\begin{quotation} \noindent}{
+% \hspace*{\fill} $\diamond$ \end{quotation}}
+
+\newcommand{\problemset}[3]{\heading{#1}{\classname}{#2}{\studentname}{#3}{Problem Set #1}} % Don't change this line
+%%%%%%%%%%%%%%%%%%%%%%%%%% Change this stuff below, don't change the line above this one
+\newcommand{\problemsetnum}{1}            % problem set number
+\newcommand{\duedate}{Due: Jan. 15, 2018, 8am EST} % problem set deadline
+\newcommand{\studentname}{Student Name: Michael Becker}      % name of student (i.e., you)
+\newcommand{\classname}{Name:  Michael Becker }
+%\newcommand{\instructor}{Prof. Eric Vigoda}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+%\addtolength{\headwidth}{\marginparsep} %these change header-rule width
+%\addtolength{\headwidth}{\marginparwidth}
+\lhead{\classname} %Problem \thesection}
+\chead{} 
+\rhead{\thepage} 
+%\lfoot{\small\scshape \classname}
+%\cfoot{} 
+%\rfoot{\footnotesize PS \#\problemsetnum} 
+\renewcommand{\headrulewidth}{.3pt} 
+\renewcommand{\footrulewidth}{.3pt}
+\setlength\voffset{-0.25in}
+\setlength\textheight{648pt}
+
+
+\newcommand{\sit}{\shortintertext}
+\newcommand\deq{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily def}}}{=}}}
+\newcommand{\ones}{\mathbbm{1}}
+\newcommand{\e}{\vec{e}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\bs}{\boldsymbol}
+\mathchardef\mhyphen="2D
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\sse}{\subseteq}
+\newcommand{\eps}{\epsilon}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\poly}{\textup{poly}}
+
+\newcommand{\dom}{\textup{dom}}
+
+\renewcommand{\thesubsection}{\thesection.\roman{subsection}}
+
+
+% auto sized delimiters
+\newcommand{\Br}[1]{\left\{#1\right\}}
+\newcommand{\br}[1]{\left[#1\right]}
+\newcommand{\pr}[1]{\left(#1\right)}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\sgn}{\textup{sgn}}
+
+%default delimiter for Pr and E
+\DeclarePairedDelimiter{\defaultDelim}{[}{]}
+
+\DeclareMathOperator{\capPr}{Pr}
+\renewcommand{\Pr}[2][]{\capPr_{#1}\defaultDelim*{#2}}
+\DeclareMathOperator{\capE}{E}
+\newcommand{\E}[2][]{\capE_{#1}\defaultDelim*{#2}}
+\DeclareMathOperator{\capVar}{Var}
+\newcommand{\Var}[2][]{\capVar_{#1}\defaultDelim*{#2}}
+
+\newcommand{\vs}{\vspace{.1in}}
+\newcommand{\vB}{\vspace{.3in}}
+
+%\DeclareMathOperator*{}{} puts subscript below
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+{\bf \noindent Homework 1. Part 2 \\ Due: Monday, January 15, 2018 before 8am EST.}
+
+\begin{problem}{[DPV] 6.2 -- Hotel stops with minimum penalty.}
+
+
+{\bf (a) } Define the entries of your table in words.  E.g., $T(i)$ or $T(i,j)$ is~....
+
+\vspace{.25in}
+Let p(i) be the minimum penalty on $a_1, a_2, ... , a_i$ where $a_i$ is included. 
+
+\vspace{3in}
+
+{\bf (b) } State recurrence for entries of table in
+terms of smaller subproblems.
+
+\vspace{.25in}
+$p(i) = \min_j \{p(j) + (200 - (a_i-a_j))^2\}$ where $j <  i$
+
+\newpage
+
+{\bf (c) }  Write pseudocode for your algorithm to solve this problem.
+
+\begin{algorithm}
+	\SetKwInOut{Input}{Input}
+    	\SetKwInOut{Output}{Output}
+   	\Input{an array $a$ of size $N$}
+	\Output{the minimum penalty by taking the optimal path of hotels}
+	\BlankLine
+	
+	initialize array $p$ of size $N$ to 0\;
+	\For{$i\in 1 \longrightarrow N$}{
+		$min\_j = i-1$ \;	
+		\For{$j\in 0 \longrightarrow i-2$}{
+			\If{$p[j] + (200 - (a[i] - a[j]))^2 < p[min\_j] + (200 - (a[i] - a[min\_j]))^2$}{
+				$min\_j = j$
+			}
+		}
+		$p[i] = p[min\_j] + (200 - (a[i] - a[min\_j]))^2$
+	}
+	\KwRet{last element in array $p$}
+\end{algorithm}
+
+\vspace{2in}
+
+{\bf (d) } Analyze the running time of your algorithm.
+
+\vspace{.25in}
+Since there are two for loops (one looping through N items and the other going back to find the minimum value), it will run in $O(n^2)$
+ 
+
+\end{problem}
+
+\newpage
+
+\begin{problem}{[DPV] 6.3 -- Yuckdonald's}
+
+
+{\bf (a) } Define the entries of your table in words.  E.g., $T(i)$ or $T(i,j)$ is~....
+
+\vspace{.25in}
+Let z(i) be the maximum profit in $\left\{\begin{matrix}
+m_1, m_2, ... , m_i\\ 
+p_1, p_2, ... , p_i
+\end{matrix}\right.$ where $m_i$ and $p_i$ are included. 
+
+\vspace{3in}
+
+{\bf (b) } State recurrence for entries of table in
+terms of smaller subproblems.
+
+\vspace{.25in}
+$z(i) = p_i + \max_j\{ z_j : (m_i - m_j) < k \}$
+
+\newpage
+
+{\bf (c) }  Write pseudocode for your algorithm to solve this problem.
+
+\begin{algorithm}
+	\SetKwInOut{Input}{Input}
+    	\SetKwInOut{Output}{Output}
+   	\Input{an array $m$ and array $p$ of size $N$ and minimum distance $k$}
+	\Output{the maximum profit gathered from optimal store placement}
+	\BlankLine
+	
+	initialize array $z$ of size $N$ to 0\;
+	\For{$i\in 1 \longrightarrow N$}{
+		$max\_j = 0$ \;	
+		\For{$j\in 0 \longrightarrow i$}{
+			\If{$p[j] > p[min\_j]$}{
+				$max\_j = j$
+			}
+		}
+		\eIf{$max\_j$ != None and $(m[i] - m[j]) >= k$}{
+			z[i] = p[i] + p[max\_j]
+		}{
+			z[i] = p[i]
+		}
+	}
+	
+	$max\_profit = 0$
+	\For{$i\in 1 \longrightarrow N$}{
+		\If{$z[i] > z[max\_profit]$}{
+			$max\_profit = i$
+		}
+	}
+	\KwRet{return z[max\_profit]}
+\end{algorithm}
+
+\vspace{2in}
+
+{\bf (d) } Analyze the running time of your algorithm.
+
+\vspace{.25in}
+Since there are two for loops (one looping through N items and the other going back to find the minimum value), it will run in $O(n^2)$
+ 
+
+\end{problem}
+
+
+\newpage
+
+\begin{problem}{[DPV] 6.17 -- Coin changing (unlimited supply of each denomination) Practice Only}
+
+
+{\bf (a) } Define the entries of your table in words.  E.g., $T(i)$ or $T(i,j)$ is~....
+
+\vspace{3in}
+
+{\bf (b) } State recurrence for entries of table in
+terms of smaller subproblems.
+
+
+\newpage
+
+{\bf (c) }  Write pseudocode for your algorithm to solve this problem.
+
+\vspace{4in}
+
+{\bf (d) } Analyze the running time of your algorithm.
+
+\end{problem}
+ 
+\newpage
+
+\begin{problem}{[DPV] 6.18 -- Coin changing (use each denomination at most once) Practice Only}
+
+
+{\bf (a) } Define the entries of your table in words.  E.g., $T(i)$ or $T(i,j)$ is~....
+
+\vspace{3in}
+
+{\bf (b) } State recurrence for entries of table in
+terms of smaller subproblems.
+
+
+\newpage
+
+{\bf (c) }  Write pseudocode for your algorithm to solve this problem.
+
+\vspace{4in}
+
+{\bf (d) } Analyze the running time of your algorithm.
+
+
+ 
+
+\end{problem}
+
+
+\end{document}
